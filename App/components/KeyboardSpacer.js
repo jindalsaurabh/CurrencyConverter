@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Keyboard, View, Dimensions, Platform, StyleSheet } from "react-native";
+import { Keyboard, View, Dimensions, StyleSheet } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -9,37 +9,24 @@ const styles = StyleSheet.create({
   },
 });
 
-export const KeyboardSpacer = ({ style, onToggle = () => null }) => {
+export const KeyboardSpacer = ({ onToggle }) => {
   const [keyboardSpace, setKeyboardSpace] = useState(0);
-
   useEffect(() => {
-    const updateKeyboardSpace = (event) => {
-      if (!event.endCoordinates) {
-        return;
-      }
-
+    const showListener = Keyboard.addListener("keyboardDidShow", (event) => {
       const screenHeight = Dimensions.get("window").height;
-      const newKeyboardSpace = screenHeight - event.endCoordinates.screenY;
-      setKeyboardSpace(newKeyboardSpace);
-      onToggle(true, newKeyboardSpace);
-    };
-    const showEvt =
-      Platform.OS === "android" ? "keyboardDidShow" : "keyboardWillShow";
-    const showListener = Keyboard.addListener(showEvt, updateKeyboardSpace);
-
-    const resetKeyboardSpace = () => {
+      const endY = event.endCoordinates.screenY;
+      setKeyboardSpace(screenHeight - endY);
+      onToggle(true);
+    });
+    const hideListener = Keyboard.addListener("keyboardDidHide", () => {
       setKeyboardSpace(0);
-      onToggle(false, 0);
-    };
-    const hideEvt =
-      Platform.OS === "android" ? "keyboardDidHide" : "keyboardWillHide";
-    const hideListener = Keyboard.addListener(hideEvt, resetKeyboardSpace);
+      onToggle(false);
+    });
 
     return () => {
       showListener.remove();
       hideListener.remove();
     };
   }, []);
-
-  return <View style={[styles.container, { height: keyboardSpace }, style]} />;
+  return <View style={[styles.container, { height: keyboardSpace }]} />;
 };

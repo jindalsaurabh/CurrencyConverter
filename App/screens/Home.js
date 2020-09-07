@@ -122,7 +122,11 @@ export default () => {
           </Text>
           <Button text="Reverse Currencies" onPress={() => alert("todo!")} />
           {/*          <View style={{ height: screen.height }} /> */}
-          <KeyboardSpacer onToggle={(visible) => setScrollEnabled(visible)} />
+          <KeyboardSpacer
+            onToggle={(keyBoardisVisible) =>
+              setScrollEnabled(keyBoardisVisible)
+            }
+          />
         </View>
       </ScrollView>
     </View>
