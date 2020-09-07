@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+// import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   View,
   StyleSheet,
@@ -7,13 +8,15 @@ import {
   Image,
   Text,
   ScrollView,
-  Keyboard,
+  //  Keyboard,
 } from "react-native";
 import { format } from "date-fns";
 
 import colors from "../constants/colors";
 import { ConversionInput } from "../components/ConversionInput";
 import { Button } from "../components/Button";
+
+import { KeyboardSpacer } from "../components/KeyboardSpacer";
 
 const screen = Dimensions.get("window");
 
@@ -63,7 +66,7 @@ export default () => {
   const date = "2020-03-23";
 
   const [scrollEnabled, setScrollEnabled] = useState(false);
-
+  /*
   useEffect(() => {
     const showListener = Keyboard.addListener("keyboardDidShow", () =>
       setScrollEnabled(true)
@@ -77,7 +80,7 @@ export default () => {
       hideListener.remove();
     };
   }, []);
-
+*/
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
@@ -118,7 +121,8 @@ export default () => {
             )}`}
           </Text>
           <Button text="Reverse Currencies" onPress={() => alert("todo!")} />
-          <View style={{ height: screen.height }} />
+          {/*          <View style={{ height: screen.height }} /> */}
+          <KeyboardSpacer onToggle={(visible) => setScrollEnabled(visible)} />
         </View>
       </ScrollView>
     </View>
