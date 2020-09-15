@@ -8,9 +8,12 @@ import {
   Image,
   Text,
   ScrollView,
+  TouchableOpacity,
   //  Keyboard,
 } from "react-native";
 import { format } from "date-fns";
+import { Entypo } from "@expo/vector-icons";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import colors from "../constants/colors";
 import { ConversionInput } from "../components/ConversionInput";
@@ -26,7 +29,7 @@ const styles = StyleSheet.create({
     backgroundColor: colors.blue,
   },
   content: {
-    paddingTop: screen.height * 0.2,
+    paddingTop: screen.height * 0.1,
   },
   logoContainer: {
     alignItems: "center",
@@ -57,9 +60,13 @@ const styles = StyleSheet.create({
   inputContainer: {
     marginBottom: 10,
   },
+  header: {
+    alignItems: "flex-end",
+    marginHorizontal: 20,
+  },
 });
 
-export default () => {
+export default ({ navigation }) => {
   const baseCurrency = "USD";
   const quoteCurrency = "GBP";
   const conversionRate = 0.89824;
@@ -84,6 +91,11 @@ export default () => {
   return (
     <View style={styles.container}>
       <StatusBar barStyle="light-content" backgroundColor={colors.blue} />
+      <SafeAreaView style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.push("Options")}>
+          <Entypo name="cog" size={32} color={colors.white} />
+        </TouchableOpacity>
+      </SafeAreaView>
       <ScrollView scrollEnabled={scrollEnabled}>
         <View style={styles.content}>
           <View style={styles.logoContainer}>

@@ -27,6 +27,7 @@ export const KeyboardSpacer = ({ onToggle }) => {
       showListener.remove();
       hideListener.remove();
     };
-  }, []);
+  });
+
   return <View style={[styles.container, { height: keyboardSpace }]} />;
 };
